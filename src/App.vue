@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import FooterGuide from '@/components/FoterGuide/FooterGuide.vue'
+import FooterGuide from '@/components/FooterGuide/FooterGuide.vue'
   export default {
     components: {
       FooterGuide
