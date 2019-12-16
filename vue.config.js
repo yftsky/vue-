@@ -1,16 +1,13 @@
-// vue.config.js
 const path = require('path')
-const px2rem = require('postcss-px2rem')
-
-/* 根据指定目录名得到根目录的绝对路径 */
-function resolve (dir) {
-  return path.join(__dirname, dir)
-}
+const px2rem = require('postcss-px2rem') // postcss的一个插件
 
 module.exports = {
+  // 只能写vue封装的配置
 
   // runtimeCompiler: true,
-   lintOnSave: false, // 关闭EsLint的规则
+  // 关闭EsLint的规则
+  lintOnSave: false,
+
   css: { // 添加postcss配置
     loaderOptions: {
       postcss: {
@@ -23,22 +20,6 @@ module.exports = {
     }
   },
 
-  devServer: {
-    host: '0.0.0.0',
-    port: 8080,
-    open: true,
-    proxy: {
-      '/4000': { // 匹配所有以 '/api'开头的请求路径
-        target: 'http://localhost:4000', // 代理目标的基础路径
-        changeOrigin: true, // 支持跨域
-        pathRewrite: { // 重写路径: 去掉路径中开头的'/api'
-          '^/4000': ''
-        }
-      },
-    }
-  },
-
-  /* 编写webpack支持的配置 */
   configureWebpack: { // 内部写webpack原生配置
     resolve: {
       extensions: ['.js', '.vue', '.json'], // 可以省略的后缀名
@@ -50,11 +31,24 @@ module.exports = {
     }
   },
 
+  devServer: {
+    open: true,
+    proxy: {
+      // 处理以/api开头路径的请求
+      '/api': {
+        target: 'http://localhost:4000', // 转发的目标地址
+        pathRewrite: {
+          '^/api' : ''  // 转发请求时去除路径前面的/api
+        },
+        changeOrigin: true, // 支持跨域, 如果协议/主机也不相同, 必须加上
+      },
+    }
+  },
+
   pluginOptions: {
-    // 配置i18n插件
     i18n: {
-      locale: 'zh_CN',
-      fallbackLocale: 'zh_CN',
+      locale: 'en',
+      fallbackLocale: 'zh',
       localeDir: 'locales',
       enableInSFC: false
     }

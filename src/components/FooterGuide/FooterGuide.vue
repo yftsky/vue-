@@ -29,18 +29,30 @@
 
 <script type="text/ecmascript-6">
   export default {
-    name : 'FooterGuide',
+    name: 'FooterGuide',
+
     methods: {
-      goto (path){
-        this.$router.replice(path)
+      goto (path) {
+        // 方案1: 如果点击当前项, 没有任务效果
+        // if (path!==this.$route.path) {
+        //   // 编程式路由跳转
+        //   this.$router.replace(path)
+        // }
+        
+        // 方案2: 如果点击当前项, 刷新界面
+        if (path!==this.$route.path) {
+          // 编程式路由跳转
+          this.$router.replace(path)
+        } else {
+          window.location = path  // 发送一般的http请求 ==> 整个界面会刷新显示
+        }
       }
-    },
+    }
   }
 </script>
 
-<style scoped lang='stylus' rel='stylesheet/stylus'>
- @import '../../common/stylus/mixins.styl'
-  
+<style scoped lang="stylus" rel="stylesheet/stylus">
+  @import '../../common/stylus/mixins.styl'
   .footer-guide
     top-border-1px(#cccccc)
     display flex
@@ -62,6 +74,4 @@
         font-size 12px
         i
           font-size 22px
-
- 
 </style>

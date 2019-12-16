@@ -13,6 +13,7 @@
   export default {
   }
 </script>
+
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .order  //订单
     width 100%
