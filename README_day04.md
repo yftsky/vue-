@@ -40,7 +40,7 @@
     2). 初始显示异常
         情况: Cannot read property 'xxx' of undefined"
         原因: 初始值是空对象, 内部没有数据, 而模板中直接显示3层表达式
-        解决: 使用v-if指令
+        解决: 使用v-if指令 (里面写a.b,不会解析模板)
     3). vue transition动画
         <transition name="xxx">
         xxx-enter-active / xxx-leave-active
@@ -53,7 +53,7 @@
     下载:
         better-scroll  // 1.x的版本 
     编码: 
-        new BScroll(wrapDiv, {})
+        new BScroll(wrapDiv, {})  (列表显示之后创建,wrapDiv只有一个子元素)
     说明:
         当内容的高度超过容器的高度时, 形成滑动
         better-scroll禁用了原生的dom事件, 使用的是自定义事件, 而且默认不分发
@@ -87,4 +87,9 @@
 ### 4). 滑动右侧列表时, 如何保证当前分类项总是可见?
     一旦当前分类变化了, 让左侧列表滑动到当前分类处
     如何判断变化了?
-    scroll.scrollToElement(li)
+    scroll.scrollToElement(li,scrolltime)
+节流处理
+import throttle from "lodash/throttle"    
+updateFoodCount : throttle(function(isAdd){
+    this.$store.dispatch('updateFoodCount',{isAdd,food:this.food})
+},1000)
